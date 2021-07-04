@@ -1,5 +1,7 @@
 import React from 'react';
 import { SSRCookies, SSRKeycloakProvider } from '@react-keycloak/ssr';
+import { ApolloProvider } from '@apollo/client';
+import client from '@/apollo-client';
 
 const keycloakConfig = {
   realm: process.env.NEXT_PUBLIC_AUTH_REALM,
@@ -19,7 +21,7 @@ function AppProviders({ children, cookies }: AppProviderProps) {
         keycloakConfig={keycloakConfig}
         persistor={SSRCookies(cookies)}
       >
-        {children}
+        <ApolloProvider client={client}>{children}</ApolloProvider>
       </SSRKeycloakProvider>
     </>
   );
