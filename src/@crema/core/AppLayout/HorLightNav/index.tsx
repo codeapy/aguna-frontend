@@ -15,7 +15,7 @@ interface HorLightNavProps {
   props?: any;
 }
 
-const HorLightNav: React.FC<HorLightNavProps> = (props) => {
+const HorLightNav: React.FC<HorLightNavProps> = ({ children, ...props }) => {
   const classes = useStyles(props);
   const { footer, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
@@ -36,7 +36,7 @@ const HorLightNav: React.FC<HorLightNavProps> = (props) => {
       <Box className={classes.mainContent}>
         <AppSidebar />
         <Box className={classes.mainContainer}>
-          <ContentView>{props.children}</ContentView>
+          <ContentView>{children}</ContentView>
         </Box>
       </Box>
       <ThemeSetting />

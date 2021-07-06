@@ -15,7 +15,7 @@ interface MiniSidebarProps {
   props?: any;
 }
 
-const MiniSidebar: React.FC<MiniSidebarProps> = (props) => {
+const MiniSidebar: React.FC<MiniSidebarProps> = ({ children }) => {
   const { footer, themeStyle, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
   const classes = useStyles({ themeStyle, footer });
@@ -37,7 +37,7 @@ const MiniSidebar: React.FC<MiniSidebarProps> = (props) => {
         <Hidden mdDown>
           <Box className={classes.mainContainer}>
             <AppHeader />
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>
@@ -45,7 +45,7 @@ const MiniSidebar: React.FC<MiniSidebarProps> = (props) => {
         <Hidden lgUp>
           <Box className={classes.mainContainerFull}>
             <AppHeader />
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>

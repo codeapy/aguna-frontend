@@ -22,8 +22,12 @@ interface AppSidebarProps {
   setCollapsed: (isCollapsed: boolean) => void;
 }
 
-const AppSidebar: React.FC<AppSidebarProps> = (props) => {
-  const { isCollapsed, setCollapsed } = props;
+const AppSidebar: React.FC<AppSidebarProps> = ({
+  variant,
+  position,
+  isCollapsed,
+  setCollapsed,
+}) => {
   const { themeMode } = useContext(AppContext);
 
   const dispatch = useDispatch();
@@ -61,12 +65,12 @@ const AppSidebar: React.FC<AppSidebarProps> = (props) => {
     <>
       <Hidden lgUp>
         <Drawer
-          anchor={props.position}
+          anchor={position}
           open={navCollapsed}
           onClose={() => handleToggleDrawer()}
           classes={{
-            root: clsx(props.variant),
-            paper: clsx(props.variant),
+            root: clsx(variant),
+            paper: clsx(variant),
           }}
           style={{ position: `absolute` }}
         >

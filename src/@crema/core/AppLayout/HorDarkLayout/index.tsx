@@ -15,7 +15,10 @@ interface HorDarkLayoutProps {
   props?: any;
 }
 
-const HorDarkLayout: React.FC<HorDarkLayoutProps> = (props) => {
+const HorDarkLayout: React.FC<HorDarkLayoutProps> = ({
+  children,
+  ...props
+}) => {
   const classes = useStyles(props);
   const { footer, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
@@ -36,7 +39,7 @@ const HorDarkLayout: React.FC<HorDarkLayoutProps> = (props) => {
       <Box className={classes.mainContent}>
         <AppSidebar />
         <Box className={classes.mainContainer}>
-          <ContentView>{props.children}</ContentView>
+          <ContentView>{children}</ContentView>
         </Box>
       </Box>
       <ThemeSetting />

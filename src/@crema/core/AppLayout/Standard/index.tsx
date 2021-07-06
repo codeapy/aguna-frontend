@@ -15,7 +15,7 @@ interface StandardLayoutProps {
   props?: any;
 }
 
-const StandardLayout: React.FC<StandardLayoutProps> = (props) => {
+const StandardLayout: React.FC<StandardLayoutProps> = ({ children }) => {
   const { footer, themeStyle, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
   const classes = useStyles({ footer, themeStyle });
@@ -37,7 +37,7 @@ const StandardLayout: React.FC<StandardLayoutProps> = (props) => {
         <Hidden mdDown>
           <Box className={classes.mainContainer}>
             <AppHeader />
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>
@@ -45,7 +45,7 @@ const StandardLayout: React.FC<StandardLayoutProps> = (props) => {
         <Hidden lgUp>
           <Box className={classes.mainContainerFull}>
             <AppHeader />
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>

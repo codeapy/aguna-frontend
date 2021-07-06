@@ -15,7 +15,10 @@ interface HorDefaultLayoutProps {
   props?: any;
 }
 
-const HorDefault: React.FC<HorDefaultLayoutProps> = (props) => {
+const HorDefault: React.FC<HorDefaultLayoutProps> = ({
+  children,
+  ...props
+}) => {
   const { footer, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
   const classes = useStyles(props);
@@ -36,7 +39,7 @@ const HorDefault: React.FC<HorDefaultLayoutProps> = (props) => {
       <Box className={classes.mainContent}>
         <AppSidebar />
         <Box className={classes.mainContainer}>
-          <ContentView>{props.children}</ContentView>
+          <ContentView>{children}</ContentView>
         </Box>
       </Box>
       <ThemeSetting />

@@ -15,7 +15,9 @@ interface HeaderUserMiniLayoutProps {
   props?: any;
 }
 
-const HeaderUserMiniLayout: React.FC<HeaderUserMiniLayoutProps> = (props) => {
+const HeaderUserMiniLayout: React.FC<HeaderUserMiniLayoutProps> = ({
+  children,
+}) => {
   const { footer, themeStyle, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
 
@@ -37,14 +39,14 @@ const HeaderUserMiniLayout: React.FC<HeaderUserMiniLayoutProps> = (props) => {
         <AppSidebar />
         <Hidden mdDown>
           <Box className={classes.mainContainer}>
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>
 
         <Hidden lgUp>
           <Box className={classes.mainContainerFull}>
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>

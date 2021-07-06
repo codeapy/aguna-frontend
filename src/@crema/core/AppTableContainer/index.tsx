@@ -22,12 +22,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AppTableContainer = (props: any) => {
+const AppTableContainer = ({ children }: any) => {
   const classes = useStyles();
 
-  return (
-    <Box className={classes.tableResponsiveMaterial}>{props.children}</Box>
-  );
+  return <Box className={classes.tableResponsiveMaterial}>{children}</Box>;
 };
 
 export default AppTableContainer;

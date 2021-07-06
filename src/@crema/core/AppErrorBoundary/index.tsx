@@ -19,6 +19,7 @@ class AppErrorBoundary extends React.Component<any, { hasError: boolean }> {
   }
 
   render() {
+    // eslint-disable-next-line react/destructuring-assignment
     if (this.state.hasError) {
       return (
         <Box
@@ -41,6 +42,7 @@ class AppErrorBoundary extends React.Component<any, { hasError: boolean }> {
         </Box>
       );
     }
+    // eslint-disable-next-line react/destructuring-assignment
     return this.props.children;
   }
 }

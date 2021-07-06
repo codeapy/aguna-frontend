@@ -15,7 +15,7 @@ interface HeaderUserLayoutProps {
   props?: any;
 }
 
-const HeaderUserLayout: React.FC<HeaderUserLayoutProps> = (props) => {
+const HeaderUserLayout: React.FC<HeaderUserLayoutProps> = ({ children }) => {
   const { footer, themeStyle, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
   const classes = useStyles({ footer, themeStyle });
@@ -37,14 +37,14 @@ const HeaderUserLayout: React.FC<HeaderUserLayoutProps> = (props) => {
         <AppSidebar />
         <Hidden mdDown>
           <Box className={classes.mainContainer}>
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>
 
         <Hidden lgUp>
           <Box className={classes.mainContainerFull}>
-            <ContentView>{props.children}</ContentView>
+            <ContentView>{children}</ContentView>
             <AppFixedFooter />
           </Box>
         </Hidden>

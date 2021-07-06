@@ -40,7 +40,7 @@ interface ContentViewProps {
   children?: ReactNode;
 }
 
-const ContentView: React.FC<ContentViewProps> = (props) => (
+const ContentView: React.FC<ContentViewProps> = ({ children }) => (
   <Scrollbar>
     <Box
       display="flex"
@@ -50,7 +50,7 @@ const ContentView: React.FC<ContentViewProps> = (props) => (
     >
       <AppSuspense>
         <AppErrorBoundary>
-          <TransitionWrapper>{props.children}</TransitionWrapper>
+          <TransitionWrapper>{children}</TransitionWrapper>
         </AppErrorBoundary>
       </AppSuspense>
     </Box>

@@ -14,7 +14,7 @@ interface DrawerLayoutProps {
   props?: any;
 }
 
-const DrawerLayout: React.FC<DrawerLayoutProps> = (props) => {
+const DrawerLayout: React.FC<DrawerLayoutProps> = ({ children }) => {
   const { footer, layoutType, footerType } =
     useContext<AppContextPropsType>(AppContext);
   const classes = useStyles({ footer });
@@ -34,7 +34,7 @@ const DrawerLayout: React.FC<DrawerLayoutProps> = (props) => {
       <AppSidebar />
       <Box className={classes.mainContent}>
         <Box className={classes.mainContainerFull}>
-          <ContentView>{props.children}</ContentView>
+          <ContentView>{children}</ContentView>
         </Box>
       </Box>
       <AppFixedFooter />

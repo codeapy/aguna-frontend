@@ -17,7 +17,7 @@ import {
 } from '../../../shared/constants/AppEnums';
 import AppContextPropsType from '../../../types/AppContextPropsType';
 
-const CremaThemeProvider: React.FC<React.ReactNode> = (props) => {
+const CremaThemeProvider: React.FC<React.ReactNode> = ({ children }) => {
   const {
     theme,
     locale,
@@ -103,7 +103,7 @@ const CremaThemeProvider: React.FC<React.ReactNode> = (props) => {
       theme={responsiveFontSizes(createMuiTheme(theme, muiLocale))}
     >
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        {props.children}
+        {children}
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   );
