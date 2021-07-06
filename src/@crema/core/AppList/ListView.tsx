@@ -25,10 +25,6 @@ const getFooterContainer = (ListFooterComponent: any) => {
 };
 
 interface ListViewProps {
-  renderRow(item: any, index: number | null): any;
-
-  onEndReached?(): void;
-
   data: any[];
   delay?: number;
   duration?: number;
@@ -37,6 +33,10 @@ interface ListViewProps {
   ListFooterComponent?: any;
   ListEmptyComponent?: any;
   ItemSeparatorComponent?: any;
+
+  renderRow(item: any, index: number | null): any;
+
+  onEndReached?(): void;
 
   [x: string]: any;
 }

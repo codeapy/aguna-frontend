@@ -9,8 +9,7 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { Manager, Popper, Reference } from 'react-popper';
-import { useRouter } from 'next/router';
-// eslint-disable-next-line import/no-cycle
+import { useRouter } from 'next/router'; // eslint-disable-next-line import/no-cycle
 import HorizontalCollapse from './HorizontalCollapse';
 import HorizontalItem from './HorizontalItem';
 import ClientOnlyPortal from './ClientPortal';

@@ -8,14 +8,13 @@ interface AppGridProps {
   responsive?: any;
   itemPadding?: number;
   animation?: any;
+  data: any;
+  containerStyle?: any;
+  border?: any;
 
   renderRow(item: any, index: number | null): any;
 
   onEndReached?(): void;
-
-  data: any;
-  containerStyle?: any;
-  border?: any;
 
   [x: string]: any;
 }

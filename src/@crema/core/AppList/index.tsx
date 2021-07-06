@@ -3,13 +3,13 @@ import ListView from './ListView';
 import ListFooter from './ListFooter';
 
 interface AppListProps {
-  renderRow(item: any, index: number | null): any;
-
-  onEndReached?(): void;
-
   border?: boolean;
   footerProps?: any;
   data: any[];
+
+  renderRow(item: any, index: number | null): any;
+
+  onEndReached?(): void;
 
   [x: string]: any;
 }

@@ -71,4 +71,5 @@ function NotificationBar() {
     </Collapse>
   );
 }
+
 export default NotificationBar;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors/index';
-import { CremaTheme } from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles(() => ({
   tableResponsiveMaterial: {

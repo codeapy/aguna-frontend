@@ -49,17 +49,16 @@ interface GridViewProps {
   column?: number;
   responsive?: any;
   itemPadding?: number;
-
-  renderRow(item: any, index: number | null): any;
-
-  onEndReached(): void;
-
   data: any;
   containerStyle?: any;
   border?: any;
   ListFooterComponent?: any;
   ListEmptyComponent?: any;
   ItemSeparatorComponent?: any;
+
+  renderRow(item: any, index: number | null): any;
+
+  onEndReached(): void;
 }
 
 const GridView: React.FC<GridViewProps> = ({

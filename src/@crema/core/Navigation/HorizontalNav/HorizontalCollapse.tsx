@@ -13,8 +13,7 @@ import clsx from 'clsx';
 import { Manager, Popper, Reference } from 'react-popper';
 import Box from '@material-ui/core/Box';
 import { useRouter } from 'next/router';
-import HorizontalItem from './HorizontalItem';
-// eslint-disable-next-line import/no-cycle
+import HorizontalItem from './HorizontalItem'; // eslint-disable-next-line import/no-cycle
 import HorizontalGroup from './HorizontalGroup';
 import IntlMessages from '../../../utility/IntlMessages';
 import AppContext from '../../../utility/AppContext';
