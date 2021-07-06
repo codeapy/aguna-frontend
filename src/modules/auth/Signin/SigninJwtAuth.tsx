@@ -84,7 +84,7 @@ const validationSchema = yup.object({
   password: yup.string().required(`Password required`),
 });
 
-function SigninJwtAuth() {
+function SigninJwtAuth(props: any) {
   const dispatch = useDispatch();
   const router = useRouter();
 
