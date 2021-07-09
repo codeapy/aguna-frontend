@@ -2,8 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 
-function PageOne({ todo }: { todo: unknown }) {
-  console.log(`todo: `, todo);
+function PageOne() {
   return (
     <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Box>

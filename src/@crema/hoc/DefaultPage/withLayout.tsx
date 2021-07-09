@@ -8,4 +8,5 @@ const withLayout = (ComposedComponent: any) => (props: any) =>
       <ComposedComponent {...props} />
     </AuthLayout>
   );
+
 export default withLayout;

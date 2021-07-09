@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { KeycloakInstance } from 'keycloak-js';
+import { useKeycloak } from '@react-keycloak/ssr';
 import Loader from '../../core/Loader';
 import { AppState } from '../../../redux/store';
 
@@ -9,13 +11,22 @@ const withData = (ComposedComponent: any) => (props: any) => {
   const { user, loading } = useSelector<AppState, AppState['auth']>(
     ({ auth }) => auth,
   );
-  const { asPath } = useRouter();
-  const queryParams = asPath.split(`?`)[1];
+  const { keycloak } = useKeycloak<KeycloakInstance>();
+
+  const router = useRouter();
+  const { asPath } = router;
+
   useEffect(() => {
-    if (!user && !loading) {
-      Router.push(`/signin${queryParams ? `?${queryParams}` : ``}`);
+    if (
+      !user &&
+      !loading &&
+      keycloak &&
+      !keycloak.authenticated &&
+      !asPath.includes(`session_state`)
+    ) {
+      window.location.href = keycloak.createLoginUrl();
     }
-  }, [user, loading]);
+  }, [user, loading, keycloak, asPath]);
   if (!user || loading) return <Loader />;
 
   return <ComposedComponent {...props} />;

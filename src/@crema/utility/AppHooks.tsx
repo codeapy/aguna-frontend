@@ -1,62 +1,57 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Cookies } from 'react-cookie';
-import { fetchStart, fetchSuccess, setJWTToken } from '../../redux/actions';
+import {
+  KeycloakInstance,
+  KeycloakProfile,
+  KeycloakTokenParsed,
+} from 'keycloak-js';
+import { AuthUser } from '@/types/models/AuthUser';
+import { useKeycloak } from '@react-keycloak/ssr';
+import { fetchSuccess, setJWTToken } from '../../redux/actions';
 import { AuthType } from '../../shared/constants/AppEnums';
-import { defaultUser } from '../../shared/constants/AppConst';
-import jwtAxios from '../services/auth/jwt-auth/jwt-api';
 import { AppState } from '../../redux/store';
 import {
   UPDATE_AUTH_USER,
   USER_LOADED,
 } from '../../types/actions/Auth.actions';
 
+const getUserObject = (
+  profile: KeycloakProfile,
+  tokenParsed?: KeycloakTokenParsed,
+  token = ``,
+): AuthUser => ({
+  token,
+  authType: AuthType.JWT_AUTH,
+  displayName: profile.username,
+  email: profile.email,
+  role: tokenParsed?.realm_access?.roles ?? [],
+  uid: profile.id ?? ``,
+});
+
 export const useAuthToken = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const { user } = useSelector<AppState, AppState['auth']>(({ auth }) => auth);
+  const {
+    keycloak: { authenticated, token, tokenParsed, loadUserProfile } = {},
+  } = useKeycloak<KeycloakInstance>();
 
   useEffect(() => {
-    const validateAuth = async () => {
-      dispatch(fetchStart());
-      const cookies = new Cookies();
-      const token = cookies.get(`token`);
-      if (!token) {
-        dispatch(fetchSuccess());
-        dispatch({ type: USER_LOADED });
-        return;
-      }
-      dispatch(setJWTToken(token));
-      try {
-        const res = await jwtAxios.get(`/auth`);
-        dispatch(fetchSuccess());
+    dispatch({ type: USER_LOADED });
+    if (authenticated)
+      loadUserProfile?.().then((profile) => {
+        const cookies = new Cookies();
+        cookies.set(`token`, token, { path: `/` });
+        dispatch(setJWTToken(token ?? ``));
         dispatch({
           type: UPDATE_AUTH_USER,
-          payload: {
-            authType: AuthType.JWT_AUTH,
-            displayName: res.data.name,
-            email: res.data.email,
-            role: defaultUser.role,
-            token: res.data._id,
-            photoURL: res.data.avatar,
-          },
+          payload: getUserObject(profile, tokenParsed, token),
         });
-        return;
-      } catch (err) {
         dispatch(fetchSuccess());
-      }
-    };
-
-    const checkAuth = () => {
-      Promise.all([validateAuth()]).then(() => {
-        setLoading(false);
         dispatch({ type: USER_LOADED });
       });
-    };
-    checkAuth();
-  }, [dispatch]);
-
-  return [loading, user];
+  }, [authenticated, dispatch, loadUserProfile, token, tokenParsed]);
+  return [user];
 };
 
 export const useAuthUser = () => {
