@@ -62,8 +62,8 @@ interface AppAnimationProps {
   [x: string]: any;
 }
 
-const AppAnimation: React.FC<AppAnimationProps> = ({ children }) => (
-  <Box>{children}</Box>
-);
+const AppAnimation: React.FC<AppAnimationProps> = ({ children }) =>
+  // <Box>{children}</Box>
+  children;
 
 export default AppAnimation;
