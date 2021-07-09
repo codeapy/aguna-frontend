@@ -26,6 +26,13 @@
     "react/no-unused-prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
+    "react/no-array-index-key": "off",
+    "no-underscore-dangle": "off",
+    "no-nested-ternary": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "max-classes-per-file": "off",
+    "@next/next/no-img-element": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -38,7 +45,7 @@
     ],
     "quotes": "off",
     "jsx-a11y/anchor-is-valid": [
-      "error",
+      "warn",
       {
         "components": ["Link"],
         "specialLink": ["hrefLeft", "hrefRight"],
