@@ -93,9 +93,9 @@ const MediaViewer: React.FC<MediaViewerProps> = ({
         {index >= 0 ? (
           <Box className={classes.carouselRoot}>
             <Slider
-              settings={{ ...settings, initialSlide: index }}
-              slickGoTo={index}
-              containerStyle={{ width: `100%` }}
+              {...settings}
+              initialSlide={index}
+              // containerStyle={{ width: `100%` }}
             >
               {/* eslint-disable-next-line no-shadow */}
               {medias.map((data: any, index: number) => renderRow(data, index))}
