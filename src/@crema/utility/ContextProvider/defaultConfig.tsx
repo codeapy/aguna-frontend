@@ -140,10 +140,10 @@ const defaultConfig: any = {
   rtAnim: RouteTransition.NONE,
   footer: false,
   locale: {
-    languageId: `english`,
-    locale: `en`,
-    name: `English`,
-    icon: `us`,
+    languageId: `spanish`,
+    locale: `es`,
+    name: `Spanish`,
+    icon: `es`,
   },
   rtlLocale: [`ar`],
 };
