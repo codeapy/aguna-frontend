@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     width: `100%`,
   },
   card: {
-    width: `100%`,
+    width: `80%`,
     textAlign: `center`,
     padding: 24,
     overflow: `hidden`,
@@ -75,7 +75,13 @@ const EntidadForm = () => {
 
   return (
     <AppAnimate animation="transition.slideUpIn" delay={200}>
-      <Box width={1}>
+      <Box
+        display="flex"
+        flex={1}
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="flex-start"
+      >
         <Card className={classes.card}>
           <Formik
             validateOnChange

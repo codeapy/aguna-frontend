@@ -8,6 +8,7 @@ import AppsContainer from '@/@crema/core/AppsContainer';
 import { AppState } from '@/redux/store';
 import { getEntidades } from '@/redux/actions/Entidad';
 import Link from 'next/link';
+import ButtonLink from '@/components/ButtonLink';
 import EntidadTable from './entidad-table';
 import AppsHeader from '../../@crema/core/AppsContainer/AppsHeader';
 import AppsContent from '../../@crema/core/AppsContainer/AppsContent';
@@ -60,11 +61,13 @@ const Entidades = () => {
                 onChange={onSearchOrder}
               />
               <Box display="flex" flexDirection="row" alignItems="center">
-                <Link href="/entidades/add">
-                  <Button variant="contained" color="primary">
-                    Agregar Entidad
-                  </Button>
-                </Link>
+                <ButtonLink
+                  href="/entidades/add"
+                  variant="contained"
+                  color="primary"
+                >
+                  Agregar Entidad
+                </ButtonLink>
 
                 <Hidden xsDown>
                   <AppsPagination
