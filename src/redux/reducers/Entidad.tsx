@@ -16,7 +16,7 @@ const EntidadReducer = (state = initialState, action: AppActions) => {
       return {
         ...state,
         entidades: action.payload.entidades,
-        entidadCount: action.payload.entidadCount,
+        entidadCount: action.payload.entidades.length,
       };
     default:
       return state;

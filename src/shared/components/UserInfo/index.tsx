@@ -117,14 +117,14 @@ const UserInfo: React.FC<any> = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem>My account</MenuItem>
+                <MenuItem>Cuenta</MenuItem>
                 <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
-                  Logout
+                  Cerrar Sesión
                 </MenuItem>
               </Menu>
             </Box>
           </Box>
-          <Box className={classes.designation}>System Manager</Box>
+          <Box className={classes.designation}>Administrador</Box>
         </Box>
       </Box>
     </Box>

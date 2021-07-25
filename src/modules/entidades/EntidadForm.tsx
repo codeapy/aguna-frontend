@@ -8,6 +8,8 @@ import * as yup from 'yup';
 import { useIntl } from 'react-intl';
 import Box from '@material-ui/core/Box';
 import { CremaTheme } from '@/types/AppContextPropsType';
+import { createEntidad } from '@/redux/actions/Entidad';
+import { useDispatch } from 'react-redux';
 import AppAnimate from '../../@crema/core/AppAnimate';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
@@ -66,7 +68,9 @@ const MyTextField = (props: any) => {
 const EntidadForm = () => {
   const classes = useStyles();
   const { messages } = useIntl();
+  const dispatch = useDispatch();
 
+  console.log(`EntidadForm`);
   const validationSchema = yup.object({
     nombre: yup
       .string()
@@ -90,7 +94,10 @@ const EntidadForm = () => {
             }}
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, resetForm }) => {
-              resetForm();
+              console.log(`onSubmit 1`);
+              dispatch(createEntidad(data));
+              console.log(`onSubmit 2`);
+              // resetForm();
             }}
           >
             {({ isSubmitting }) => (

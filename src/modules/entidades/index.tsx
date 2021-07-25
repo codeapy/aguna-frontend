@@ -32,7 +32,7 @@ const Entidades = () => {
     setPage(value);
   };
   useEffect(() => {
-    dispatch(getEntidades(search, page));
+    dispatch(getEntidades());
   }, [dispatch, search, page]);
 
   const onSearchOrder = (e: React.ChangeEvent<HTMLInputElement>) => {

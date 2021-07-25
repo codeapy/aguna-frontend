@@ -1,19 +1,60 @@
 import { Dispatch } from 'redux';
 import { AppActions } from '@/types';
 import { GET_ENTIDADES } from '@/types/actions/Entidad.action';
-import Api from '../../@crema/services/ApiConfig';
+import client from '@/apollo-client';
+import { gql } from '@apollo/client';
 import { fetchError, fetchStart, fetchSuccess } from './Common';
 
-export const getEntidades =
-  (search: string, page: number) => (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    Api.get(`/api/entidades`, {
-      params: { search, page },
+const GET_ENTIDADES_QUERY = gql`
+  query GetEntidades {
+    entidades {
+      id
+      nombre
+    }
+  }
+`;
+
+const CREATE_ENTIDAD = gql`
+  mutation CreateEntidad($nombre: String!) {
+    createEntidad(input: { nombre: $nombre }) {
+      id
+      nombre
+    }
+  }
+`;
+
+export const getEntidades = () => (dispatch: Dispatch<AppActions>) => {
+  dispatch(fetchStart());
+  client
+    .query({ query: GET_ENTIDADES_QUERY })
+    .then(({ data, error }) => {
+      if (!error) {
+        dispatch(fetchSuccess());
+        dispatch({ type: GET_ENTIDADES, payload: data });
+      } else {
+        dispatch(fetchError(`Something went wrong, Please try again!`));
+      }
     })
-      .then((data) => {
-        if (data.status === 200) {
+    .catch((error) => {
+      dispatch(fetchError(error.message));
+    });
+};
+
+export const createEntidad =
+  (input: { nombre: string }) => (dispatch: Dispatch<AppActions>) => {
+    dispatch(fetchStart());
+    client
+      .mutate({
+        mutation: CREATE_ENTIDAD,
+        variables: {
+          ...input,
+        },
+      })
+      .then((result) => {
+        const { errors } = result;
+        if (!errors) {
           dispatch(fetchSuccess());
-          dispatch({ type: GET_ENTIDADES, payload: data.data });
+          // dispatch({ type: GET_ENTIDADES, payload: data });
         } else {
           dispatch(fetchError(`Something went wrong, Please try again!`));
         }

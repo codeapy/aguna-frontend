@@ -15,4 +15,4 @@ export const defaultUser: AuthUser = {
   authType: AuthType.AUTH0,
   photoURL: `https://via.placeholder.com/150`,
 };
-export const initialUrl = `/sample/page-1`; // this url will open after login
+export const initialUrl = `/entidades`; // this url will open after login

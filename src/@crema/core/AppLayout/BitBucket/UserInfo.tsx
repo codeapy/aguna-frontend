@@ -82,9 +82,9 @@ const UserInfo: React.FC<UserInfoProps> = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>My account</MenuItem>
+          <MenuItem>Cuenta</MenuItem>
           <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
-            Logout
+            Cerrar Sesión
           </MenuItem>
         </Menu>
       </Box>

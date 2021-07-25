@@ -116,7 +116,7 @@ const HeaderUser: React.FC<HeaderUserProps> = ({ header = true }) => {
                   fontWeight={Fonts.LIGHT}
                   color="text.secondary"
                 >
-                  System Manager
+                  Administrador
                 </Box>
               </Box>
             </Hidden>
@@ -142,9 +142,9 @@ const HeaderUser: React.FC<HeaderUserProps> = ({ header = true }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem>My account</MenuItem>
+                <MenuItem>Cuenta</MenuItem>
                 <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
-                  Logout
+                  Cerrar Sesión
                 </MenuItem>
               </Menu>
             </Box>
