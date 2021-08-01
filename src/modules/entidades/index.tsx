@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Hidden } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import AppsContainer from '@/@crema/core/AppsContainer';
-import { AppState } from '@/redux/store';
-import { getEntidades } from '@/redux/actions/Entidad';
-import Link from 'next/link';
 import ButtonLink from '@/components/ButtonLink';
+import { useEntidades } from '@/hooks/entidades';
 import EntidadTable from './entidad-table';
 import AppsHeader from '../../@crema/core/AppsContainer/AppsHeader';
 import AppsContent from '../../@crema/core/AppsContainer/AppsContent';
@@ -18,22 +15,17 @@ import InfoView from '../../@crema/core/InfoView';
 
 const Entidades = () => {
   const { messages } = useIntl();
-  const dispatch = useDispatch();
-  const { entidades, entidadCount } = useSelector<
-    AppState,
-    AppState['entidad']
-  >(({ entidad }) => entidad);
   const [page, setPage] = useState<number>(0);
   const [search, setSearchQuery] = useState<string>(``);
+
+  const { data } = useEntidades();
+
   const onPageChange = (
     event: React.ChangeEvent<unknown> | null,
     value: number,
   ) => {
     setPage(value);
   };
-  useEffect(() => {
-    dispatch(getEntidades());
-  }, [dispatch, search, page]);
 
   const onSearchOrder = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -72,7 +64,7 @@ const Entidades = () => {
                 <Hidden xsDown>
                   <AppsPagination
                     rowsPerPage={10}
-                    count={entidadCount}
+                    count={data.length}
                     page={page}
                     onPageChange={onPageChange}
                   />
@@ -87,13 +79,13 @@ const Entidades = () => {
               paddingBottom: 10,
             }}
           >
-            <EntidadTable entidadData={entidades} />
+            <EntidadTable entidadData={data} />
           </AppsContent>
 
           <Hidden smUp>
             <AppsPagination
-              rowsPerPage={10}
-              count={entidadCount}
+              rowsPerPage={data.length}
+              count={data.length}
               page={page}
               onPageChange={onPageChange}
             />

@@ -8,8 +8,9 @@ import * as yup from 'yup';
 import { useIntl } from 'react-intl';
 import Box from '@material-ui/core/Box';
 import { CremaTheme } from '@/types/AppContextPropsType';
-import { createEntidad } from '@/redux/actions/Entidad';
-import { useDispatch } from 'react-redux';
+import { router } from 'next/client';
+import { ApolloError } from '@apollo/client';
+import { useUpsertEntidadMutation } from '@/hooks/entidades';
 import AppAnimate from '../../@crema/core/AppAnimate';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
@@ -68,9 +69,9 @@ const MyTextField = (props: any) => {
 const EntidadForm = () => {
   const classes = useStyles();
   const { messages } = useIntl();
-  const dispatch = useDispatch();
 
-  console.log(`EntidadForm`);
+  const [mutate] = useUpsertEntidadMutation();
+
   const validationSchema = yup.object({
     nombre: yup
       .string()
@@ -93,11 +94,15 @@ const EntidadForm = () => {
               nombre: ``,
             }}
             validationSchema={validationSchema}
-            onSubmit={(data, { setSubmitting, resetForm }) => {
-              console.log(`onSubmit 1`);
-              dispatch(createEntidad(data));
-              console.log(`onSubmit 2`);
-              // resetForm();
+            onSubmit={(data, { setSubmitting, setErrors }) => {
+              mutate({ variables: data })
+                .then(() => {
+                  router.push(`/entidades`);
+                })
+                .catch((err: ApolloError) => {
+                  setErrors({ nombre: err.message });
+                  setSubmitting(false);
+                });
             }}
           >
             {({ isSubmitting }) => (
