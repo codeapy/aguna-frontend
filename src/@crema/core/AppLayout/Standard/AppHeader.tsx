@@ -70,9 +70,8 @@ function AppHeader() {
           </Hidden>
           <AppLogo />
           <Box className={classes.grow} />
-          <SearchBar borderLight placeholder="Search…" />
+          <SearchBar borderLight placeholder="Buscar…" />
           <Box className={classes.sectionDesktop}>
-            <LanguageSwitcher />
             <HeaderMessages />
             <Notifications />
           </Box>

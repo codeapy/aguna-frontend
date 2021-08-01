@@ -81,7 +81,7 @@ const HorUserInfo: FC<HorUserInfoProps> = ({ bgType = `colored` }) => {
           <Box ml={3} className={classes.userName}>
             {user && (user.displayName ? user.displayName : user.email)}
             <Box fontSize={13} fontWeight={Fonts.LIGHT}>
-              System Manager
+              Administrador
             </Box>
           </Box>
         </Hidden>
@@ -94,9 +94,9 @@ const HorUserInfo: FC<HorUserInfoProps> = ({ bgType = `colored` }) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>My account</MenuItem>
+          <MenuItem>Cuenta</MenuItem>
           <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
-            Logout
+            Cerrar Sesión
           </MenuItem>
         </Menu>
       </Box>
