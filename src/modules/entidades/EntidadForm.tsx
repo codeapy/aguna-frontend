@@ -8,9 +8,13 @@ import * as yup from 'yup';
 import { useIntl } from 'react-intl';
 import Box from '@material-ui/core/Box';
 import { CremaTheme } from '@/types/AppContextPropsType';
-import { router } from 'next/client';
 import { ApolloError } from '@apollo/client';
-import { useUpsertEntidadMutation } from '@/hooks/entidades';
+import {
+  useEntidad,
+  useCreateEntidadMutation,
+  useUpdateEntidadMutation,
+} from '@/hooks/entidades';
+import { useRouter } from 'next/router';
 import AppAnimate from '../../@crema/core/AppAnimate';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
@@ -69,8 +73,20 @@ const MyTextField = (props: any) => {
 const EntidadForm = () => {
   const classes = useStyles();
   const { messages } = useIntl();
+  const router = useRouter();
+  const { id } = router.query;
+  const isEdit = id != null;
 
-  const [mutate] = useUpsertEntidadMutation();
+  const { data: entidad } = useEntidad({
+    variables: {
+      id: Number(id),
+    },
+    skip: !isEdit,
+  });
+
+  const [createMutation] = useCreateEntidadMutation();
+  const [updateMutation] = useUpdateEntidadMutation();
+  const mutate = isEdit ? updateMutation : createMutation;
 
   const validationSchema = yup.object({
     nombre: yup
@@ -89,10 +105,13 @@ const EntidadForm = () => {
       >
         <Card className={classes.card}>
           <Formik
+            key={entidad?.id}
             validateOnChange
-            initialValues={{
-              nombre: ``,
-            }}
+            initialValues={
+              entidad ?? {
+                nombre: ``,
+              }
+            }
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, setErrors }) => {
               mutate({ variables: data })

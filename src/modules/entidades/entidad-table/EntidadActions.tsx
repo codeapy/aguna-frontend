@@ -5,8 +5,10 @@ import Fade from '@material-ui/core/Fade';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Box from '@material-ui/core/Box';
+import { router } from 'next/client';
+import { Entidad } from '@/types/models/entidades/EntidadApp';
 
-const EntidadActions = () => {
+const EntidadActions = ({ data }: { data: Entidad }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -38,7 +40,12 @@ const EntidadActions = () => {
         <MenuItem style={{ fontSize: 14 }} onClick={handleClose}>
           Ver
         </MenuItem>
-        <MenuItem style={{ fontSize: 14 }} onClick={handleClose}>
+        <MenuItem
+          style={{ fontSize: 14 }}
+          onClick={() => {
+            router.push(`/entidades/edit/${data.id}`);
+          }}
+        >
           Editar
         </MenuItem>
         <MenuItem style={{ fontSize: 14 }} onClick={handleClose}>

@@ -26,7 +26,7 @@ const TableItem: React.FC<TableItemProps> = ({ data }) => {
         {data.nombre}
       </TableCell>
       <TableCell align="right" className={classes.tableCell}>
-        <EntidadActions />
+        <EntidadActions data={data} />
       </TableCell>
     </TableRow>
   );
