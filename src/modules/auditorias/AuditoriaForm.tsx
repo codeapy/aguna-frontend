@@ -9,8 +9,8 @@ import { useIntl } from 'react-intl';
 import Box from '@material-ui/core/Box';
 import { CremaTheme } from '@/types/AppContextPropsType';
 import { ApolloError } from '@apollo/client';
-import { useEntidad, useUpsertEntidadMutation } from '@/hooks/entidades';
 import { useRouter } from 'next/router';
+import { useAuditoria, useUpsertAuditoriaMutation } from '@/hooks/auditorias';
 import AppAnimate from '../../@crema/core/AppAnimate';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
@@ -66,21 +66,21 @@ const MyTextField = (props: any) => {
   );
 };
 
-const EntidadForm = () => {
+const AuditoriaForm = () => {
   const classes = useStyles();
   const { messages } = useIntl();
   const router = useRouter();
   const { id } = router.query;
   const isEdit = id != null;
 
-  const { data: entidad } = useEntidad({
+  const { data: auditoria } = useAuditoria({
     variables: {
       id: Number(id),
     },
     skip: !isEdit,
   });
 
-  const [mutate] = useUpsertEntidadMutation({ isEdit });
+  const [mutate] = useUpsertAuditoriaMutation({ isEdit });
 
   const validationSchema = yup.object({
     nombre: yup
@@ -99,10 +99,10 @@ const EntidadForm = () => {
       >
         <Card className={classes.card}>
           <Formik
-            key={entidad?.id}
+            key={auditoria?.id}
             validateOnChange
             initialValues={
-              entidad ?? {
+              auditoria ?? {
                 nombre: ``,
               }
             }
@@ -110,7 +110,7 @@ const EntidadForm = () => {
             onSubmit={(data, { setSubmitting, setErrors }) => {
               mutate({ variables: data })
                 .then(() => {
-                  router.push(`/entidades`);
+                  router.push(`/auditorias`);
                 })
                 .catch((err: ApolloError) => {
                   setErrors({ nombre: err.message });
@@ -147,4 +147,4 @@ const EntidadForm = () => {
   );
 };
 
-export default EntidadForm;
+export default AuditoriaForm;

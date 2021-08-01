@@ -2,23 +2,23 @@ import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
-import { Entidad } from '@/types/models/auditorias/App';
+import { Auditoria } from '@/types/models/auditorias/App';
 import TableHeading from './TableHeading';
 import TableItem from './TableItem';
 import AppTableContainer from '../../../@crema/core/AppTableContainer';
 
-interface EntidadTableProps {
-  entidadData: Entidad[];
+interface AuditoriaTableProps {
+  auditoriaData: Auditoria[];
 }
 
-const EntidadTable: React.FC<EntidadTableProps> = ({ entidadData }) => (
+const AuditoriaTable: React.FC<AuditoriaTableProps> = ({ auditoriaData }) => (
   <AppTableContainer>
     <Table stickyHeader className="table">
       <TableHead>
         <TableHeading />
       </TableHead>
       <TableBody>
-        {entidadData.map((data) => (
+        {auditoriaData.map((data) => (
           <TableItem data={data} key={data.id} />
         ))}
       </TableBody>
@@ -26,4 +26,4 @@ const EntidadTable: React.FC<EntidadTableProps> = ({ entidadData }) => (
   </AppTableContainer>
 );
 
-export default EntidadTable;
+export default AuditoriaTable;

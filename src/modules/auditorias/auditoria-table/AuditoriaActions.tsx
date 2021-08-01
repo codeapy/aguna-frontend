@@ -6,9 +6,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Box from '@material-ui/core/Box';
 import { router } from 'next/client';
-import { Entidad } from '@/types/models/auditorias/App';
+import { Auditoria } from '@/types/models/auditorias/App';
 
-const EntidadActions = ({ data }: { data: Entidad }) => {
+const AuditoriaActions = ({ data }: { data: Auditoria }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -43,7 +43,7 @@ const EntidadActions = ({ data }: { data: Entidad }) => {
         <MenuItem
           style={{ fontSize: 14 }}
           onClick={() => {
-            router.push(`/entidades/edit/${data.id}`);
+            router.push(`/auditorias/edit/${data.id}`);
           }}
         >
           Editar
@@ -55,4 +55,4 @@ const EntidadActions = ({ data }: { data: Entidad }) => {
     </Box>
   );
 };
-export default EntidadActions;
+export default AuditoriaActions;

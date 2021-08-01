@@ -3,12 +3,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
-import EntidadActions from '@/modules/entidades/entidad-table/EntidadActions';
-import { Entidad } from '@/types/models/auditorias/App';
+import AuditoriaActions from '@/modules/auditorias/auditoria-table/AuditoriaActions';
+import { Auditoria } from '@/types/models/auditorias/App';
 import useStyles from './TableItem.style';
 
 interface TableItemProps {
-  data: Entidad;
+  data: Auditoria;
 }
 
 const TableItem: React.FC<TableItemProps> = ({ data }) => {
@@ -26,7 +26,7 @@ const TableItem: React.FC<TableItemProps> = ({ data }) => {
         {data.nombre}
       </TableCell>
       <TableCell align="right" className={classes.tableCell}>
-        <EntidadActions data={data} />
+        <AuditoriaActions data={data} />
       </TableCell>
     </TableRow>
   );
