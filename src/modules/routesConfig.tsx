@@ -22,5 +22,13 @@ const routesConfig: NavItemProps[] = [
     url: `/entidades`,
     icon: `dashboard`,
   },
+  {
+    id: `auditorias`,
+    title: `Auditorias`,
+    messageId: `sidebar.auditorias`,
+    type: `item`,
+    url: `/auditorias`,
+    icon: `dashboard`,
+  },
 ];
 export default routesConfig;

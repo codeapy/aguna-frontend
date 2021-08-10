@@ -8,6 +8,10 @@ const GET_AUDITORIAS = gql`
     auditorias {
       id
       nombre
+      entidad {
+        id
+        nombre
+      }
     }
   }
 `;
@@ -16,24 +20,38 @@ const GET_AUDITORIA = gql`
     auditoria(input: { id: $id }) {
       id
       nombre
+      entidad {
+        id
+        nombre
+      }
     }
   }
 `;
 
 const CREATE_AUDITORIA = gql`
-  mutation CreateAuditoria($nombre: String!) {
-    createAuditoria(input: { nombre: $nombre }) {
+  mutation CreateAuditoria($nombre: String!, $entidadId: Int!) {
+    createAuditoria(input: { nombre: $nombre, entidadId: $entidadId }) {
       id
       nombre
+      entidad {
+        id
+        nombre
+      }
     }
   }
 `;
 
 const UPDATE_AUDITORIA = gql`
-  mutation UpdateAuditoria($id: Int!, $nombre: String!) {
-    updateAuditoria(input: { id: $id, nombre: $nombre }) {
+  mutation UpdateAuditoria($id: Int!, $nombre: String!, $entidadId: Int!) {
+    updateAuditoria(
+      input: { id: $id, nombre: $nombre, entidadId: $entidadId }
+    ) {
       id
       nombre
+      entidad {
+        id
+        nombre
+      }
     }
   }
 `;

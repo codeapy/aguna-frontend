@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
 import { Form, Formik, useField } from 'formik';
 import * as yup from 'yup';
 import { useIntl } from 'react-intl';
@@ -11,8 +10,13 @@ import { CremaTheme } from '@/types/AppContextPropsType';
 import { ApolloError } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useAuditoria, useUpsertAuditoriaMutation } from '@/hooks/auditorias';
-import AppAnimate from '../../@crema/core/AppAnimate';
+import TextField from '@/modules/form/TextField';
+import Autocomplete from '@/modules/form/Autocomplete';
+import { useEntidades } from '@/hooks/entidades';
+import { Entidad } from '@/types/models/auditorias/App';
+import MuTextField from '@material-ui/core/TextField';
 import IntlMessages from '../../@crema/utility/IntlMessages';
+import AppAnimate from '../../@crema/core/AppAnimate';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   logo: {
@@ -35,6 +39,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     },
   },
   form: {
+    display: `flex`,
+    flexDirection: `column`,
+    gap: 32,
     textAlign: `left`,
     marginBottom: 12,
     [theme.breakpoints.up(`xl`)]: {
@@ -53,15 +60,38 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     cursor: `pointer`,
   },
 }));
-const MyTextField = (props: any) => {
-  const [field, meta] = useField(props);
-  const errorText = meta.error && meta.touched ? meta.error : ``;
+
+const EntidadAutocomplete = (props: any) => {
+  const [{ value = null }, , { setValue }] = useField(props);
+  const { data, loading: isLoading } = useEntidades();
+
   return (
-    <TextField
+    <Autocomplete
       {...props}
-      {...field}
-      helperText={errorText}
-      error={!!errorText}
+      value={value}
+      onChange={(event: any, newValue: Entidad) => {
+        setValue(newValue);
+      }}
+      getOptionLabel={(option: Entidad) => option.nombre}
+      options={data}
+      renderOption={(option: Entidad) => <div>{option.nombre}</div>}
+      renderInput={(params: any) => (
+        <MuTextField
+          {...params}
+          label="Entidad"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {isLoading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
+        />
+      )}
     />
   );
 };
@@ -104,11 +134,20 @@ const AuditoriaForm = () => {
             initialValues={
               auditoria ?? {
                 nombre: ``,
+                entidad: {
+                  id: undefined,
+                },
               }
             }
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, setErrors }) => {
-              mutate({ variables: data })
+              mutate({
+                variables: {
+                  id: id != null ? Number(id) : undefined,
+                  nombre: data.nombre,
+                  entidadId: data.entidad.id,
+                },
+              })
                 .then(() => {
                   router.push(`/auditorias`);
                 })
@@ -120,14 +159,19 @@ const AuditoriaForm = () => {
           >
             {({ isSubmitting }) => (
               <Form className={classes.form} noValidate autoComplete="off">
-                <Box>
-                  <MyTextField
-                    label={<IntlMessages id="common.name" />}
-                    name="nombre"
-                    variant="outlined"
-                    className={classes.textField}
-                  />
-                </Box>
+                <TextField
+                  label={<IntlMessages id="common.name" />}
+                  name="nombre"
+                  variant="outlined"
+                  className={classes.textField}
+                />
+
+                <EntidadAutocomplete
+                  label="Entidad"
+                  name="entidad"
+                  variant="outlined"
+                  className={classes.textField}
+                />
 
                 <Button
                   variant="contained"

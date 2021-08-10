@@ -31,6 +31,9 @@ const TableHeading = () => {
       <TableCell align="left" className={classes.tableCellRoot}>
         Nombre
       </TableCell>
+      <TableCell align="left" className={classes.tableCellRoot}>
+        Entidad
+      </TableCell>
     </TableRow>
   );
 };

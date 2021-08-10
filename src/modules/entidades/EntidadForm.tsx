@@ -1,9 +1,8 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
-import { Form, Formik, useField } from 'formik';
+import { Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { useIntl } from 'react-intl';
 import Box from '@material-ui/core/Box';
@@ -11,6 +10,7 @@ import { CremaTheme } from '@/types/AppContextPropsType';
 import { ApolloError } from '@apollo/client';
 import { useEntidad, useUpsertEntidadMutation } from '@/hooks/entidades';
 import { useRouter } from 'next/router';
+import TextField from '@/modules/form/TextField';
 import AppAnimate from '../../@crema/core/AppAnimate';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 
@@ -53,18 +53,6 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     cursor: `pointer`,
   },
 }));
-const MyTextField = (props: any) => {
-  const [field, meta] = useField(props);
-  const errorText = meta.error && meta.touched ? meta.error : ``;
-  return (
-    <TextField
-      {...props}
-      {...field}
-      helperText={errorText}
-      error={!!errorText}
-    />
-  );
-};
 
 const EntidadForm = () => {
   const classes = useStyles();
@@ -121,7 +109,7 @@ const EntidadForm = () => {
             {({ isSubmitting }) => (
               <Form className={classes.form} noValidate autoComplete="off">
                 <Box>
-                  <MyTextField
+                  <TextField
                     label={<IntlMessages id="common.name" />}
                     name="nombre"
                     variant="outlined"

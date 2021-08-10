@@ -38,12 +38,24 @@ const UPDATE_ENTIDAD = gql`
   }
 `;
 
+type QueryEntidades = {
+  entidades: Entidad[];
+};
+
+type CreateEntidad = {
+  createEntidad: Entidad;
+};
+
+type UpdateEntidad = {
+  updateEntidad: Entidad;
+};
+
 const emptyList: any[] = [];
 
 export function useEntidades(): Omit<QueryResult, 'data'> & {
   data: Entidad[];
 } {
-  const query = useQuery<{ entidades: Entidad[] }>(GET_ENTIDADES);
+  const query = useQuery<QueryEntidades>(GET_ENTIDADES);
   const { data, loading, error } = query;
   useRequestLoader(loading, error);
 
@@ -65,51 +77,45 @@ export function useEntidad(options?: QueryHookOptions): Omit<
 }
 
 export function useCreateEntidadMutation() {
-  const [mutate, result] = useMutation<{ createEntidad: Entidad }>(
-    CREATE_ENTIDAD,
-    {
-      update: (cache, mutationResult) => {
-        const newEntidad = mutationResult.data?.createEntidad;
-        const data =
-          cache.readQuery<{ entidades: Entidad[] }>({
-            query: GET_ENTIDADES,
-          })?.entidades ?? [];
-
-        cache.writeQuery({
+  const [mutate, result] = useMutation<CreateEntidad>(CREATE_ENTIDAD, {
+    update: (cache, mutationResult) => {
+      const newEntidad = mutationResult.data?.createEntidad;
+      const data =
+        cache.readQuery<QueryEntidades>({
           query: GET_ENTIDADES,
-          data: { entidades: [...data, newEntidad] },
-        });
-      },
+        })?.entidades ?? [];
+
+      cache.writeQuery({
+        query: GET_ENTIDADES,
+        data: { entidades: [...data, newEntidad] },
+      });
     },
-  );
+  });
   const { loading, error } = result;
   useRequestLoader(loading, error);
   return [mutate];
 }
 
 export function useUpdateEntidadMutation() {
-  const [mutate, result] = useMutation<{ updateEntidad: Entidad }>(
-    UPDATE_ENTIDAD,
-    {
-      update: (cache, mutationResult) => {
-        const newEntidad = mutationResult.data?.updateEntidad;
-        const data =
-          cache.readQuery<{ entidades: Entidad[] }>({
-            query: GET_ENTIDADES,
-          })?.entidades ?? [];
-
-        cache.writeQuery({
+  const [mutate, result] = useMutation<UpdateEntidad>(UPDATE_ENTIDAD, {
+    update: (cache, mutationResult) => {
+      const newEntidad = mutationResult.data?.updateEntidad;
+      const data =
+        cache.readQuery<QueryEntidades>({
           query: GET_ENTIDADES,
-          data: {
-            entidades: data.map((e) => {
-              if (e.id === newEntidad?.id) return newEntidad;
-              return e;
-            }),
-          },
-        });
-      },
+        })?.entidades ?? [];
+
+      cache.writeQuery({
+        query: GET_ENTIDADES,
+        data: {
+          entidades: data.map((e) => {
+            if (e.id === newEntidad?.id) return newEntidad;
+            return e;
+          }),
+        },
+      });
     },
-  );
+  });
   const { loading, error } = result;
   useRequestLoader(loading, error);
   return [mutate];

@@ -25,6 +25,12 @@ const TableItem: React.FC<TableItemProps> = ({ data }) => {
       >
         {data.nombre}
       </TableCell>
+      <TableCell
+        align="left"
+        className={clsx(classes.tableCell, classes.tableCell)}
+      >
+        {data.entidad?.nombre}
+      </TableCell>
       <TableCell align="right" className={classes.tableCell}>
         <AuditoriaActions data={data} />
       </TableCell>
